@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<link rel="stylesheet" href="./css/w3.css"/>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">   		
+		<script src="//cdn.jsdelivr.net/pouchdb/6.2.0/pouchdb.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <p>Count numbers: <output id="result"></output></p>
+        <button onclick="startWorker()">Start Worker</button> 
+        <button onclick="stopWorker()">Stop Worker</button>
+        
+        <p><strong>Note:</strong> Internet Explorer 9 and earlier versions do not support Web Workers.</p>
+        <input type="hidden" id="counter"/>
+        <div id="elapsedtime"></div>
+        <script type="text/javascript" src="timertest.js"></script>
+    </body>
+</html>

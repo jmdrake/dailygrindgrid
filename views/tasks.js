@@ -10,19 +10,13 @@ function viewsTaskListInit() {
     $(".btnDelete").on("click", function(event){
         var taskDiv = $(this).parent().parent();
         var id = taskDiv.find("#_id").val();
-        ctrlsTasksGetTaskList(id, function(results){
-            if(results.length == 0){
-                var r = confirm("Delete this task?");
-                if (r == true) {
-                    ctrlsTasksGetTask(id, function(task){
-                        ctrlsTasksDeleteTask(task);                    
-                        taskDiv.hide();
-                    })                      
-                }
-            } else {
-                alert("Cannot delete task with subtasks")
-            }
-        })
+        var r = confirm("Delete this task?");
+        if (r == true) {
+            ctrlsTasksGetTask(id, function(task){
+                ctrlsTasksDeleteTask(task);                    
+                taskDiv.hide();
+            })                      
+        }
     });
 
     $(".btnTimer").on("click", function(event){
@@ -41,11 +35,11 @@ function viewsTaskListInit() {
             stopWorker();
     })
     
-    $(".togglecompleted").on("change", function(event){
+    $(".taskToggleCompleted").on("change", function(event){
         var taskDiv = $(this).parent().parent();
         var id = taskDiv.find("#_id").val();
         ctrlsTasksGetTask(id, function(task){
-            if(taskDiv.find(".togglecompleted").prop("checked")) {
+            if(taskDiv.find(".taskToggleCompleted").prop("checked")) {
                 taskDiv.find("label").addClass("completed");
                 task["completed"] = true;
             } else {

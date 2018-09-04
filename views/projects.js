@@ -40,11 +40,11 @@ function viewsProjectListInit(){
         $("#parentheader").show();
     });
     
-    $(".togglecompleted").on("change", function(event){
+    $(".projectToggleCompleted").on("change", function(event){
         var projectDiv = $(this).parent().parent();
         var id = projectDiv.find("#_id").val();
         ctrlsProjectsGetProject(id, function(project){
-            if(projectDiv.find(".togglecompleted").prop("checked")) {
+            if(projectDiv.find(".projectToggleCompleted").prop("checked")) {
                 projectDiv.find("label").addClass("completed");
                 project["completed"] = true;
             } else {

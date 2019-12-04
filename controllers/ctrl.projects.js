@@ -34,9 +34,32 @@ function ctrlsProjectsGetProject(id, callback){
 }
 
 function ctrlsProjectsUpdateProject(doc){
-    dbProjects.put(doc).catch(function(err){console.log(err)});
+    dbProjects.put(doc).then(function(res){console.log(res)}).catch(function(err){console.log(err)});
 }
 
 function ctrlsProjectsDeleteProject(project) {
     dbProjects.remove(project).catch(function(err){console.log(err)});
+}
+
+function ctrlsProjectGetProjectPath(project, callback)
+{
+	var path = project.name;
+	if(project != null && project.parent != null)
+		traversePath(project.parent, path, callback);	
+	else
+		callback(project.name);
+		// console.log(project.name);
+}
+
+function traversePath(id, path, callback)
+{
+	if(id != null)
+		ctrlsProjectsGetProject(id, function(parent){
+			path = parent.name + "/" + path;
+			if(parent.parent != null)
+				traversePath(parent.parent, path, callback);
+			else {
+				callback(path);
+			}						
+		})
 }

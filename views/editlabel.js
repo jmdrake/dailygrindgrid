@@ -6,8 +6,8 @@ function viewsEditlabelInit() {
     $('.editlabel label').on("click", function(event) {
     	var label = $(this).parent().find("label");
     	var input = $(this).parent().find("input");
-    	//var value = label.html();
-    	//input.val(value);
+    	var value = label.html();
+    	input.val(value);
     	input.show();
     	label.hide();
     	input.focus();

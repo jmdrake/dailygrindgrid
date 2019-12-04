@@ -1,9 +1,53 @@
 $(document).ready(function(){
     $("#dailytasks").load("tasks.html", function(){
         var today = new Date();
-        showTasks(today.toISOString().split('T')[0]);
+		$("#task-date").val(format_date(today));
+		var dt = new Date($("#task-date").val()+"T00:00:00");
+		showTasks(dt.toISOString().split('T')[0]);
         viewsTaskListInit();
-    });
+		$("#task-date").on("change", function(){
+			try {
+				var dt = new Date($("#task-date").val()+"T00:00:00");
+				showTasks(dt.toISOString().split('T')[0]);				
+			} catch {
+				console.log(dt);	
+			}			
+		});
+		
+		$("#chkShowTimes").on("change", function(event){
+			if($(this).prop("checked")) {
+				$(".lblTimeElapsed").show();
+				$(".lblTimeAllocated").show();
+			} else {
+				$(".lblTimeElapsed").hide();
+				$(".lblTimeAllocated").hide();
+			}
+		});
+
+		$("#btnAddTask").on("click", function(event){
+			event.stopImmediatePropagation();
+			var project = $("#mdlNewTask #project").val();
+			var date = $("#mdlNewTask #date").val();
+			var hours = $("#mdlNewTask #hours").val();
+			var minutes = $("#mdlNewTask #minutes").val();
+			var timeallocated = hours * 3600 + minutes * 60;
+			ctrlsTasksAddTask(project, date, timeallocated, (task) => {
+				console.log(task);
+				var newTask = utilsFormcontrolsCloneDiv($("#tmplTask"), task, "");
+				newTask.show();
+				$("#lstTasks").append(newTask);
+				$("#mdlNewTask").hide();	
+				viewsCalendarRender(task.date);
+				viewsTaskListInit();
+				var myDiv = newTask;
+				ctrlsProjectsGetProject(task.project, (project) => {
+					ctrlsProjectGetProjectPath(project, function(path){
+						newTask.find("#name").html(path);						
+					})					
+				})
+			})
+		});			
+    });	
 })
 
 function viewsTaskListInit() {
@@ -13,17 +57,17 @@ function viewsTaskListInit() {
         var r = confirm("Delete this task?");
         if (r == true) {
             ctrlsTasksGetTask(id, function(task){
-                ctrlsTasksDeleteTask(task);                    
-                taskDiv.hide();
+                ctrlsTasksDeleteTask(task, function(res){console.log(res); viewsCalendarRender($("#task-date").val())});                    
+                taskDiv.hide();				
             })                      
         }
     });
 
     $(".btnTimer").on("click", function(event){
         var taskDiv = $(this).parent().parent();
-        $("#mdlTimer").find("#taskid").val(taskDiv.attr("id"))
-        $("#mdlTimer").find("#timeelapsed").val(taskDiv.find(".timeelapsed").val());
-        $("#lblTimeelapsed").html(formatms(taskDiv.find(".timeelapsed").val()))
+        $("#mdlTimer #taskid").val(taskDiv.attr("id"))
+        $("#mdlTimer #timeelapsed").val(taskDiv.find(".timeelapsed").val());
+        $("#lblTimeElapsed").html(formatms(taskDiv.find(".timeelapsed").val()))
         $("#mdlTimer").show();
     });
     
@@ -35,11 +79,11 @@ function viewsTaskListInit() {
             stopWorker();
     })
     
-    $(".taskToggleCompleted").on("change", function(event){
+    $(".chkTaskComplete").on("change", function(event){
         var taskDiv = $(this).parent().parent();
         var id = taskDiv.find("#_id").val();
         ctrlsTasksGetTask(id, function(task){
-            if(taskDiv.find(".taskToggleCompleted").prop("checked")) {
+            if(taskDiv.find(".chkTaskComplete").prop("checked")) {
                 taskDiv.find("label").addClass("completed");
                 task["completed"] = true;
             } else {
@@ -48,27 +92,7 @@ function viewsTaskListInit() {
             }
             ctrlsTasksUpdateTask(task);
         });
-    });
-    
-    $("#chkShowTimes").on("change", function(event){
-        if($(this).prop("checked")) {
-            $(".lblTimeelapsed").show();
-        } else {
-            $(".lblTimeelapsed").hide();
-        }
-    });
-    
-    $("#btnAddTask").on("click", function(event){
-        var project = $("#mdlNewTask").find("#project").val();
-        var date = $("#mdlNewTask").find("#date").val();
-        ctrlsTasksAddTask(project, date, function(task){
-            console.log(task);
-            var newTask = utilsFormcontrolsCloneDiv($("#tmplTask"), task, "");
-            newTask.show();
-            $("#lstTasks").append(newTask);
-            $("#mdlNewTask").hide();
-        })
-    })
+    });	 
 }
 
 function showTasks(date) {
@@ -79,16 +103,22 @@ function showTasks(date) {
     ctrlsTasksGetTaskList(date, function(tasklist){
         utilsFormcontrolsPopulateDivList($("#lstTasks"), tasklist, tmplTask, {
             callback : function(div, data){
-                // while(!ctrlsTasksProjectNames[data["project"]]);
-                div.find("#name").html(ctrlsTasksProjectNames[data["project"]]);
+                // while(!ctrlsTasksProjectNames[data["project"]]);                
+				ctrlsProjectsGetProject(data.project, (project) => {
+					ctrlsProjectGetProjectPath(project, function(path){
+						div.find("#name").html(path);
+					})					
+				});				
                 if(data["completed"]){
                     div.find("label").addClass("completed");
-                    div.find(".togglecompleted").prop("checked", true);
+                    div.find(".chkTaskComplete").prop("checked", true);
                 }
                 div.attr("id", "task" + data["_id"]);
                 var timeelapsed = data["timeelapsed"] ? data["timeelapsed"] : 0;
+				var timeallocated = data["timeallocated"] ? data["timeallocated"] : 0;
                 div.find(".timeelapsed").val(timeelapsed);
-                div.find(".lblTimeelapsed").html(formatms(timeelapsed));
+                div.find(".lblTimeElapsed").html(formatms(timeelapsed));
+				div.find(".lblTimeAllocated").html(formatms(timeallocated));
             }
         });
         viewsEditlabelInit();
@@ -101,10 +131,10 @@ function viewsTasksAddTask(){
         var newTaskItem = utilsFormcontrolsCloneDiv($("#tmplTask"), newTaskDoc, "");
         newTaskItem.find("#namefield").val(newTaskDoc["name"]);
         $("#lstTasks").append(newTaskItem);
-        viewsTaskListInit();
-        viewsEditlabelInit();
         newTaskItem.show();
-        $("#newtask").val("");
+        
+        viewsTaskListInit();
+        viewsEditlabelInit();		
     })
 }
 
@@ -117,11 +147,11 @@ function startWorker() {
         }
         w.onmessage = function(event) {
             var timeelapsed = parseInt($("#timeelapsed").val());
-            var fmtTimeelapsed = formatms(timeelapsed);
+            var fmtTimeElapsed = formatms(timeelapsed);
             $("#timeelapsed").val(timeelapsed + 1);
-            $("#lblTimeelapsed").html(fmtTimeelapsed);
+            $("#lblTimeElapsed").html(fmtTimeElapsed);
             var taskDiv = $("#" + $("#taskid").val());
-            taskDiv.find(".lblTimeelapsed").html(fmtTimeelapsed);
+            taskDiv.find(".lblTimeElapsed").html(fmtTimeElapsed);
             taskDiv.find(".timeelapsed").val(timeelapsed);
             var id = taskDiv.find("#_id").val();
             ctrlsTasksGetTask(id, function(task){

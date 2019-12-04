@@ -1,7 +1,8 @@
-var modelsTasksTaskTemplate = {
+var modelsTasks = {
     name : "",
     completed : false,
+	date : "yyyy-mm-dd",
     timealloted: null,
     timeelapsed: null,
-    parent: null
+    project: null
 };

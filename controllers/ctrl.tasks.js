@@ -3,30 +3,41 @@ var dbTasks = new PouchDB("https://thathersessallyredernsin:5b391b98ab31e3c53b65
 var ctrlsTasksProjectNames = {};
 
 function ctrlsTasksGetTaskList(date, callback){
-    var tasks = [];
-    var semaphore = 0;
+    var tasks = [];    
     dbTasks.allDocs({include_docs: true}, function(err, results) {
         for(var i=0; i<results.rows.length; i++) {
             var doc = results.rows[i].doc;
             if(doc["date"]==date) {
                 tasks[tasks.length] = doc;
-                semaphore++;
-                dbProjects.get(doc["project"]).then(project=>{
-                    ctrlsTasksProjectNames[project["_id"]] = project["name"];
-                    semaphore--;
-                    if(semaphore==0)
-                        callback(tasks);
-                })
             }
         }
+		callback(tasks);
     });
 }
 
-function ctrlsTasksAddTask(project, date, callback) {
+function ctrlsTasksForMonth(month, year, callback) {
+	var tasks = [];
+	dbTasks.allDocs({include_docs: true}, function(err, results){
+		for(var i=0; i < results.rows.length; i++) {
+			var taskdoc = results.rows[i].doc;			
+			var taskdt = taskdoc.date.split("-");
+			// console.log(taskdt);
+			var taskmonth = parseInt(taskdt[1]);
+			var taskyear = parseInt(taskdt[0]);
+			if(taskmonth == month && taskyear == year) {
+				tasks[tasks.length] = taskdoc;
+			}
+		}
+		callback(tasks);
+	})
+}
+
+function ctrlsTasksAddTask(project, date, timeallocated, callback) {
     var newTask = {};
     newTask["project"] = project;
     newTask["date"] = date;
     newTask["_id"] = Date.now().toString();
+	newTask["timeallocated"] = timeallocated;
     newTask["timeelapsed"] = null;
 
     dbTasks.put(newTask).then(responseTask => {
@@ -51,6 +62,6 @@ function ctrlsTasksUpdateTask(doc){
     dbTasks.put(doc).catch(function(err){console.log(err)});
 }
 
-function ctrlsTasksDeleteTask(task) {
-    dbTasks.remove(task).catch(function(err){console.log(err)});
+function ctrlsTasksDeleteTask(task, callback) {
+    dbTasks.remove(task).then(function(res){callback(res)}).catch(function(err){console.log(err)});
 }

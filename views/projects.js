@@ -10,7 +10,7 @@ function viewsProjectListInit(){
         var projectDiv = $(this).parent().parent();
         var id = projectDiv.find("#_id").val();
         ctrlsProjectsGetProject(id, function(project){
-            project["name"] = projectDiv.find("#namefield").val();
+            project["name"] = projectDiv.find(".namefield").val();
             ctrlsProjectsUpdateProject(project);
         })
     });
@@ -130,7 +130,7 @@ function showProjects(id) {
 function viewsProjectsAddProject(){
     ctrlsProjectsAddProject($("#newproject").val(), $("#parent").val(), function(newProjectDoc){
         var newProjectItem = utilsFormcontrolsCloneDiv($("#tmplProject"), newProjectDoc, "");
-        newProjectItem.find("#namefield").val(newProjectDoc["name"]);
+        newProjectItem.find(".namefield").val(newProjectDoc["name"]);
         $("#lstProjects").append(newProjectItem);
         viewsProjectListInit();
         viewsEditlabelInit();

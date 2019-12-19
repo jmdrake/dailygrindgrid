@@ -31,6 +31,7 @@ function utilsFormcontrolsPopulateDivList(div, data, template, options) {
 function utilsFormcontrolsJson2Form(div, record, href) {
     for(var key in record) {
         var element = div.find("#" + key);
+		if(element.html()==null) element = div.find("." + key);
         var value = unescape(record[key]);        
         if(element.get(0) != undefined)
             switch(element.get(0).tagName){

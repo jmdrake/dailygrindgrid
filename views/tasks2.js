@@ -1,8 +1,7 @@
 $(document).ready(function(){
-    $("#dailytasks").load("tasks.html", function(){
+    $("#dailytasks").load("tasks2.html", function(){
         var today = new Date();
-		$("#task-date").val(format_date(today));
-		var dt = new Date($("#task-date").val()+"T00:00:00");
+		var dt = new Date(format_date(today) +"T00:00:00");
 		showTasks(dt.toISOString().split('T')[0]);
         viewsTaskListInit();
 		$("#task-date").on("change", function(){
@@ -16,11 +15,9 @@ $(document).ready(function(){
 		
 		$("#chkShowTimes").on("change", function(event){
 			if($(this).prop("checked")) {
-				$(".lblTimeElapsed").show();
-				$(".lblTimeAllocated").show();
+				$(".times").show();
 			} else {
-				$(".lblTimeElapsed").hide();
-				$(".lblTimeAllocated").hide();
+				$(".times").hide();
 			}
 		});
 
@@ -35,36 +32,42 @@ $(document).ready(function(){
 				console.log(task);
 				var newTask = utilsFormcontrolsCloneDiv($("#tmplTask"), task, "");
 				newTask.show();
-				$("#lstTasks").append(newTask);
+				$("#todo-list").append(newTask);
 				$("#mdlNewTask").hide();	
 				viewsCalendarRender(task.date);
 				viewsTaskListInit();
 				var myDiv = newTask;
 				ctrlsProjectsGetProject(task.project, (project) => {
 					ctrlsProjectGetProjectPath(project, function(path){
-						newTask.find("#name").html(path);						
+						newTask.find(".name").html(path);						
 					})					
-				})
+				});
+				$("#main header").show();
 			})
 		});			
     });	
 })
 
 function viewsTaskListInit() {
-    $(".btnDelete").on("click", function(event){
+    $(".destroy").on("click", function(event){
         var taskDiv = $(this).parent().parent();
         var id = taskDiv.find("#_id").val();
         var r = confirm("Delete this task?");
         if (r == true) {
             ctrlsTasksGetTask(id, function(task){
                 ctrlsTasksDeleteTask(task, function(res){console.log(res); viewsCalendarRender($("#task-date").val())});                    
-                taskDiv.hide();				
+                taskDiv.remove();		
+				if($("#todo-list").children().length <= 1) {
+					$("#main header").hide();
+				}
             })                      
         }
     });
 
-    $(".btnTimer").on("click", function(event){
+    $(".clock").on("click", function(event){
         var taskDiv = $(this).parent().parent();
+		
+		
         $("#mdlTimer #taskid").val(taskDiv.attr("id"))
         $("#mdlTimer #timeelapsed").val(taskDiv.find(".timeelapsed").val());
         $("#lblTimeElapsed").html(formatms(taskDiv.find(".timeelapsed").val()))
@@ -98,44 +101,35 @@ function viewsTaskListInit() {
 function showTasks(date) {
     var tmplTask = $("#tmplTask");
     tmplTask.hide();
-    $("#lstTasks").html("");
-    $("#lstTasks").append(tmplTask);
+    $("#todo-list").html("");
+    $("#todo-list").append(tmplTask);
     ctrlsTasksGetTaskList(date, function(tasklist){
-        utilsFormcontrolsPopulateDivList($("#lstTasks"), tasklist, tmplTask, {
-            callback : function(div, data){
-                // while(!ctrlsTasksProjectNames[data["project"]]);                
-				ctrlsProjectsGetProject(data.project, (project) => {
-					ctrlsProjectGetProjectPath(project, function(path){
-						div.find("#name").html(path);
-					})					
-				});				
-                if(data["completed"]){
-                    div.find("label").addClass("completed");
-                    div.find(".chkTaskComplete").prop("checked", true);
-                }
-                div.attr("id", "task" + data["_id"]);
-                var timeelapsed = data["timeelapsed"] ? data["timeelapsed"] : 0;
-				var timeallocated = data["timeallocated"] ? data["timeallocated"] : 0;
-                div.find(".timeelapsed").val(timeelapsed);
-                div.find(".lblTimeElapsed").html(formatms(timeelapsed));
-				div.find(".lblTimeAllocated").html(formatms(timeallocated));
-            }
-        });
+		if(tasklist.length > 0){
+			$("#main header").show();
+			utilsFormcontrolsPopulateDivList($("#todo-list"), tasklist, tmplTask, {
+				callback : function(div, data){
+					// while(!ctrlsTasksProjectNames[data["project"]]);                
+					ctrlsProjectsGetProject(data.project, (project) => {
+						ctrlsProjectGetProjectPath(project, function(path){
+							div.find(".name").html(path);
+						})					
+					});				
+					if(data["completed"]){
+						div.find("label").addClass("completed");
+						div.find(".chkTaskComplete").prop("checked", true);
+					}
+					div.attr("id", "task" + data["_id"]);
+					var timeelapsed = data["timeelapsed"] ? data["timeelapsed"] : 0;
+					var timeallocated = data["timeallocated"] ? data["timeallocated"] : 0;
+					div.find(".timeelapsed").val(timeelapsed);
+					div.find(".lblTimeElapsed").html(formatms(timeelapsed));
+					div.find(".lblTimeAllocated").html(formatms(timeallocated));
+				}
+			});			
+		}
         viewsEditlabelInit();
         viewsTaskListInit();
     });
-}
-
-function viewsTasksAddTask(){
-    ctrlsTasksAddTask($("#newtask").val(), $("#parent").val(), function(newTaskDoc){
-        var newTaskItem = utilsFormcontrolsCloneDiv($("#tmplTask"), newTaskDoc, "");
-        newTaskItem.find(".namefield").val(newTaskDoc["name"]);
-        $("#lstTasks").append(newTaskItem);
-        newTaskItem.show();
-        
-        viewsTaskListInit();
-        viewsEditlabelInit();		
-    })
 }
 
 var w;

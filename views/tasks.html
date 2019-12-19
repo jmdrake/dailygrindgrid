@@ -1,8 +1,9 @@
 <h1>Tasks</h1>
 <style>
-	.completed {
-		text-decoration: line-through;
-	}
+.completed {
+	text-decoration: line-through;
+}
+	
 </style>
 
 <div id="mdlTimer" class="w3-modal">
@@ -36,7 +37,7 @@
 	<input id="task-date" type="date"/>
 </div>		
 
-<div class="w3-container">
+<div class="w3-container" id="here">
 	<div class="w3-card-4 w3-white">
 		<div class="w3-row" id="parentheader" style="display:none"><label id="header"></label><button id="btnUpLevel"><i class="fas fa-level-up-alt"></i></button></div>
 		<div id="lstTasks">
@@ -44,7 +45,7 @@
 				<input type="hidden" id="_id"/>
 				<div class="w3-col m1 l1 s1 w3-border-right w3-border-red w3-margin-left">
 					<input class="chkTaskComplete" type="checkbox"/>
-					<span id="date"></span>
+					<span id="date" class="w3-hide"></span>
 				</div>
 			    <div class="w3-col m8 s6 l8 w3-margin-left">
 			        <label id="name">Placeholder</label>
@@ -60,3 +61,4 @@
 		</div>
 	</div>
 </div>
+

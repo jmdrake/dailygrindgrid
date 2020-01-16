@@ -1,0 +1,61 @@
+<h1>Projects</h1>
+<style>
+	.completed {
+		text-decoration: line-through;
+	}
+</style>
+
+<div class="w3-container">
+	<div class="w3-card-4 w3-white">
+		<div class="w3-row" id="parentheader" style="display:none"><label id="header"></label><button id="btnUpLevel"><i class="fas fa-level-up-alt"></i></button></div>
+		<div class="w3-row w3-large w3-border-bottom w3-border-blue">
+			<div class="w3-col m1 l1 s1 w3-border-right w3-border-red w3-margin-left ">
+				<input id="selectall" type="checkbox"/>
+			</div>
+			<div class="w3-col w3-col m8 s8 l8 w3-margin-left">
+				<input placeholder="New Project" style="width:100%; height:20px" id="newproject" onchange="viewsProjectsAddProject();"/>
+			</div>
+			<input type="hidden" id="parent"/>
+		</div>
+		<div id="lstProjects">
+			<div class="w3-row w3-border-bottom w3-border-blue" id="tmplProject">
+				<input type="hidden" id="_id"/>
+				<div class="w3-col m1 l1 s1 w3-border-right w3-border-red w3-margin-left">
+					<input class="chkProjectComplete" type="checkbox"/>
+				</div>
+			    <div class="editlabel w3-col m8 s6 l8 w3-margin-left">
+			        <label class="name">Placeholder</label>
+			        <input class="namefield" style="width: 100%; display:none" />
+			    </div>
+				<div class="w3-col m2 s3">
+					<button class="btnDelete"><i class="fas fa-trash"></i></button>
+					<button class="btnSubProject"><i class="fas fa-project-diagram"></i></button>
+					<button class="btnDate"><i class="fas fa-calendar"></i></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section id="projects">
+	<header class="header">
+		<h1>Projects</h1>
+	</header>
+	<section class="main">
+		<ul id="lstProjects">
+			<li id="tmplProject">
+				<input type="hidden" id="_id"/>
+				<div class="view">
+					<input class="chkProjectComplete toggle" type="checkbox">
+					<span class="editlabel">
+						<span style="margin-left:50" class="name"></span>
+						<span style="margin-left:50" class="namefield" style="display:none"></span>
+					</span>										
+					<button class="destroy"></button>
+					<button class="subtask"></button>
+					<button class="schedule"></button>
+				</div>
+			</li>
+		</ul>
+	</section>      
+</section>

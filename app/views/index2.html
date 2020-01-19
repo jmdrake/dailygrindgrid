@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Daily Grind</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">     
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet" href="calendar.css">
+		<link type="text/css" rel="stylesheet" href="tasks2.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="//cdn.jsdelivr.net/pouchdb/6.2.0/pouchdb.min.js"></script>
+        <script src="../js/formcontrols.js"></script>
+        <script src="../controllers/ctrl.tasks.js"></script>
+        <script src="../models/model.tasks.js"></script>
+        <script src="../controllers/ctrl.projects.js"></script>
+        <script src="../models/model.projects.js"></script>
+        <script src="projects.js"></script>
+        <script src="calendar.js"></script>
+        <script src="tasks2.js"></script>
+		<script src="editlabel.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="w3-bar w3-border w3-grey w3-top">
+                <a href="#projecttasks" class="w3-bar-item w3-button w3-padding-16">Project&nbsp<i class="fas fa-project-diagram"></i></a>
+                <a href="#calendar" class="w3-bar-item w3-button w3-padding-16">Calendar&nbsp<i class="fa fa-calendar-alt"></i></a>
+                <a href="#dailytasks" class="w3-bar-item w3-button w3-padding-16">Daily Tasks&nbsp<i class="fas fa-tasks"></i></a>
+            </div>            
+        </header>
+        <main>
+            <br><br>
+            <div id="projecttasks"></div>
+            <div id="calendar"></div>
+            <div id="dailytasks"></div>
+        </main>
+        <footer>
+            
+        </footer>
+    </body>
+</html>

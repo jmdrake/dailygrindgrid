@@ -21,8 +21,10 @@ var express = require('express');
 var app = express();
 var util = require('util');
  
-
-app.use(express.static('views'));
+// app.use(express.static('controllers'));
+// app.use(express.static('models'));
+// app.use(express.static('app/views'));
+app.use('/static', express.static('app'))
 
 var server = app.listen(process.env.PORT || 8080, function () {
    var host = server.address().address

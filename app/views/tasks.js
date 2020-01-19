@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#dailytasks").load("views/tasks.html", function(){
+    $("#dailytasks").load("tasks.html", function(){
         var today = new Date();
 		$("#task-date").val(format_date(today));
 		var dt = new Date($("#task-date").val()+"T00:00:00");

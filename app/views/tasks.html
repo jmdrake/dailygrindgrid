@@ -1,0 +1,64 @@
+<h1>Tasks</h1>
+<style>
+.completed {
+	text-decoration: line-through;
+}
+	
+</style>
+
+<div id="mdlTimer" class="w3-modal">
+	<div class="w3-modal-content">
+		<div class="w3-container">
+			<span onclick="document.getElementById('mdlTimer').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+			Start/Stop timer<button id="btnToggleTimer"><i class="fas fa-stopwatch"></i></button>
+			<label>Show times</label><input type="checkbox" id="chkShowTimes"/>
+			<input type="hidden" id="timeelapsed" value="0"/>
+			<input type="hidden" id="taskid"/>
+			<p>Time allocated: <label id="lblTimeallocated"></label></p>
+			<p>Time elapsed: <label id="lblTimeelapsed"></label></p>
+		</div>
+	</div>
+</div>
+
+<div id="mdlNewTask" class="w3-modal">
+	<div class="w3-modal-content">
+		<span onclick="document.getElementById('mdlNewTask').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+		<input type="hidden" id="project">
+		<label>Name : </label><span id="name"></span><br>
+		<label>Date: </label><input type="date" id="date"><br>
+		<lable>Time Allotted: </lable>
+			HH<input maxlength="2" id="hours" size="2" placeholder="00">
+			MM<input maxlength=2 id="minutes" size="2" placeholder="00"><br>
+		<button id="btnAddTask">Submit</button>
+	</div>
+</div>
+
+<div>
+	<input id="task-date" type="date"/>
+</div>		
+
+<div class="w3-container" id="here">
+	<div class="w3-card-4 w3-white">
+		<div class="w3-row" id="parentheader" style="display:none"><label id="header"></label><button id="btnUpLevel"><i class="fas fa-level-up-alt"></i></button></div>
+		<div id="lstTasks">
+			<div class="w3-row w3-border-bottom w3-border-blue" id="tmplTask">
+				<input type="hidden" id="_id"/>
+				<div class="w3-col m1 l1 s1 w3-border-right w3-border-red w3-margin-left">
+					<input class="chkTaskComplete" type="checkbox"/>
+					<span id="date" class="w3-hide"></span>
+				</div>
+			    <div class="w3-col m8 s6 l8 w3-margin-left">
+			        <label id="name">Placeholder</label>
+			    </div>
+				<div class="w3-col m2 s3">
+					<button class="btnDelete"><i class="fas fa-trash"></i></button>
+					<button class="btnTimer"><i class="fas fa-clock"></i></button>
+					<label class="lblTimeElapsed" style="display:none">0:00</label>
+					<input type="hidden" class="timeelapsed" value="0"/>			
+					| <label class="lblTimeAllocated" style="display:none">0:00</label>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

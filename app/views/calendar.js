@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#calendar").load("views/calendar.html", function(){
+    $("#calendar").load("calendar.html", function(){
             var today = new Date();
 			var dt = format_date(today);
 			$("#task-date").val(dt);

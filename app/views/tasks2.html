@@ -1,0 +1,59 @@
+<style>
+	.completed {
+		text-decoration: line-through;
+	}
+</style>
+
+<div id="mdlTimer" class="w3-modal">
+	<div class="w3-modal-content">
+		<div class="w3-container">
+			<span onclick="document.getElementById('mdlTimer').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+			Start/Stop timer<button id="btnToggleTimer">⏱</button>			
+			<input type="hidden" id="timeelapsed" value="0"/>
+			<input type="hidden" id="taskid"/>
+			<p>Time allocated: <label class="lblTimeAllocated times"></label></p>
+			<p>Time elapsed: <label class="lblTimeElapsed times"></label></p>
+		</div>
+	</div>
+</div>
+
+<div id="mdlNewTask" class="w3-modal">
+	<div class="w3-modal-content">
+		<span onclick="document.getElementById('mdlNewTask').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+		<input type="hidden" id="project">
+		<label>Name : </label><span id="name"></span><br>
+		<label>Date: </label><input type="date" id="date"><br>
+		<lable>Time Allotted: </lable>
+			HH<input maxlength="2" id="hours" size="2" placeholder="00">
+			MM<input maxlength=2 id="minutes" size="2" placeholder="00"><br>
+		<button id="btnAddTask">Submit</button>
+	</div>
+</div>
+
+<section id="todoapp">
+	<header id="header">
+		<h1>Daily Tasks </h1>
+	</header>
+	<section id="main">
+		<header style="position: relative; left : 50px; display: none">
+			<input id="chkShowTimes" type="checkbox"> : Show Times 
+		</header>
+		<ul id="todo-list">
+			<li id="tmplTask">
+				<input type="hidden" id="_id"/>
+				<div class="view">
+					<input class="chkTaskComplete toggle" type="checkbox">
+					<span>
+						<span style="margin-left:50" class="name"></span>
+						<span class="times" style="float: right; display: none">
+							<span class="lblTimeElapsed">0:00</span>|<span class="lblTimeAllocated">0:00</span>
+						</span>
+					</span>										
+					<input type="hidden" class="timeelapsed" value="0"/>			
+					<button class="destroy"></button>
+					<button class="clock"></button>
+				</div>
+			</li>
+		</ul>
+	</section>      
+</section>

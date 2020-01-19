@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#projecttasks").load("views/projects.html", function(){
+    $("#projecttasks").load("projects.html", function(){
         showProjects(null);
     });
 });

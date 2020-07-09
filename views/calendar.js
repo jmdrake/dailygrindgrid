@@ -34,7 +34,7 @@ function viewsCalendarRender(d)
 	var dt = d.split("-");
 	var month = parseInt(dt[1]);
 	var year = parseInt(dt[0]);
-	var first_date = month_name[month] + " " + 1 + " " + year;
+	var first_date = month_name[month-1] + " " + 1 + " " + year;
 	//September 1 2014
 	var tmp = new Date(first_date).toDateString();
 	//Mon Sep 01 2014 ...

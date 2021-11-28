@@ -1,6 +1,6 @@
 var dbProjects = new PouchDB("projects");
 var ibmurl = "https://thathersessallyredernsin:5b391b98ab31e3c53b65c6aaa872698ec8bbdb39@55644244-4beb-4ca8-b177-8ff6d5c3cc0b-bluemix.cloudant.com/dailygrindprojects";
-var cnurl =  "https://couchdb.cloudno.de/cloudwall"
+var cnurl =  "https://couchdb.cloudno.de/cloudwall";
 //  dbIBMProjects = new PouchDB(ibmurl); 
 
 var dbCNProjects = new PouchDB(cnurl);

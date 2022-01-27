@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">     
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
         <link type="text/css" rel="stylesheet" href="calendar.css">
-		<link type="text/css" rel="stylesheet" href="tasks2.css">
+		<link type="text/css" rel="stylesheet" href="tasks.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="//cdn.jsdelivr.net/pouchdb/6.2.0/pouchdb.min.js"></script>
         <script src="../js/formcontrols.js"></script>
@@ -16,7 +16,7 @@
         <script src="../models/model.projects.js"></script>
         <script src="projects.js"></script>
         <script src="calendar.js"></script>
-        <script src="tasks2.js"></script>
+        <script src="tasks.js"></script>
 		<script src="editlabel.js"></script>
     </head>
     <body>

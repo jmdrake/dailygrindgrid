@@ -2,7 +2,7 @@ var dbProjects = new PouchDB("projects");
 var ibmurl = "https://thathersessallyredernsin:5b391b98ab31e3c53b65c6aaa872698ec8bbdb39@55644244-4beb-4ca8-b177-8ff6d5c3cc0b-bluemix.cloudant.com/dailygrindprojects";
 //  dbIBMProjects = new PouchDB(ibmurl); 
 
-dbProjects.sync(ibmurl, {batch_size:5; batch_limit:3});
+dbProjects.sync(ibmurl, {batch_size:5, batch_limit:3});
 
 function ctrlsProjectsGetProjectList(parent, callback) {
     var results = [];

@@ -87,10 +87,10 @@ function viewsTaskListInit() {
         var id = taskDiv.find("#_id").val();
         ctrlsTasksGetTask(id, function(task){
             if(taskDiv.find(".chkTaskComplete").prop("checked")) {
-                taskDiv.find("label").addClass("completed");
+                taskDiv.find(".name").addClass("completed");
                 task["completed"] = true;
             } else {
-                taskDiv.find("label").removeClass("completed");
+                taskDiv.find(".name").removeClass("completed");
                 task["completed"] = false;
             }
             ctrlsTasksUpdateTask(task);
@@ -115,7 +115,7 @@ function showTasks(date) {
 						})					
 					});				
 					if(data["completed"]){
-						div.find("label").addClass("completed");
+						div.find(".name").addClass("completed");
 						div.find(".chkTaskComplete").prop("checked", true);
 					}
 					div.attr("id", "task" + data["_id"]);

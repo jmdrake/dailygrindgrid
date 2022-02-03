@@ -37,7 +37,7 @@ function ctrlsTasksAddTask(task, callback) {
     newTask["timeelapsed"] = null;
     newTask["_id"] = Date.now().toString();
     dbTasks.put(newTask).then(responseTask => {
-        dbProjects.get(project).then(responseProject => {
+        dbProjects.get(newTask.project).then(responseProject => {
             newTask["name"] = responseProject["name"];
             callback(newTask)
         })

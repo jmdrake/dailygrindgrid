@@ -32,7 +32,7 @@ $(document).ready(function(){
                 "project" : $("#mdlNewTask #project").val(),
                 "date" : $("#mdlNewTask #date").val(),
                 "timeallocated" : timeallocated,
-                "ongoing" : $("#mdlNewTask #ongoing").prop("checked");
+                "ongoing" : $("#mdlNewTask #ongoing").prop("checked")
             }
             
 			ctrlsTasksAddTask(newTask, (task) => {

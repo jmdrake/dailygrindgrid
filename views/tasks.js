@@ -24,8 +24,8 @@ $(document).ready(function(){
 		$("#btnAddTask").on("click", function(event){
 			event.stopImmediatePropagation();
  
-            hours = $("#mdlNewTask #hours").val(),
-            minutes = $("#mdlNewTask #minutes").val(),
+            hours = $("#mdlNewTask #hours").val();
+            minutes = $("#mdlNewTask #minutes").val();
 			var timeallocated = hours * 3600 + minutes * 60;
  
             var newTask = {

@@ -7,7 +7,7 @@ function ctrlsTasksGetTaskList(date, callback){
     dbTasks.allDocs({include_docs: true}, function(err, results) {
         for(var i=0; i<results.rows.length; i++) {
             var doc = results.rows[i].doc;
-            if((doc["date"]==date)||(doc["date"]<date&&doc["ongoining"])) {
+            if((doc["date"]==date)||(doc["date"]<date&&doc["ongoing"])) {
                 tasks[tasks.length] = doc;
             }
         }

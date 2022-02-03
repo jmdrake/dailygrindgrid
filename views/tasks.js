@@ -23,12 +23,19 @@ $(document).ready(function(){
 
 		$("#btnAddTask").on("click", function(event){
 			event.stopImmediatePropagation();
-			var project = $("#mdlNewTask #project").val();
-			var date = $("#mdlNewTask #date").val();
-			var hours = $("#mdlNewTask #hours").val();
-			var minutes = $("#mdlNewTask #minutes").val();
+ 
+            hours = $("#mdlNewTask #hours").val(),
+            minutes = $("#mdlNewTask #minutes").val(),
 			var timeallocated = hours * 3600 + minutes * 60;
-			ctrlsTasksAddTask(project, date, timeallocated, (task) => {
+ 
+            var newTask = {
+                "project" : $("#mdlNewTask #project").val(),
+                "date" : $("#mdlNewTask #date").val(),
+                "timeallocated" : timeallocated,
+                "ongoing" : $("#mdlNewTask #ongoing").prop("checked");
+            }
+            
+			ctrlsTasksAddTask(newTask, (task) => {
 				console.log(task);
 				var newTask = utilsFormcontrolsCloneDiv($("#tmplTask"), task, "");
 				newTask.show();

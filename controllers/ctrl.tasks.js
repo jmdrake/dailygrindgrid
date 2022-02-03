@@ -7,7 +7,7 @@ function ctrlsTasksGetTaskList(date, callback){
     dbTasks.allDocs({include_docs: true}, function(err, results) {
         for(var i=0; i<results.rows.length; i++) {
             var doc = results.rows[i].doc;
-            if(doc["date"]==date) {
+            if((doc["date"]==date)||(doc["date"]<date&&doc["ongoining"])) {
                 tasks[tasks.length] = doc;
             }
         }
@@ -32,12 +32,8 @@ function ctrlsTasksForMonth(month, year, callback) {
 	})
 }
 
-function ctrlsTasksAddTask(project, date, timeallocated, callback) {
-    var newTask = {};
-    newTask["project"] = project;
-    newTask["date"] = date;
-    newTask["_id"] = Date.now().toString();
-	newTask["timeallocated"] = timeallocated;
+function ctrlsTasksAddTask(task, callback) {
+    var newTask = task;
     newTask["timeelapsed"] = null;
 
     dbTasks.put(newTask).then(responseTask => {

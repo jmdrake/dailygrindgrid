@@ -35,7 +35,7 @@ function ctrlsTasksForMonth(month, year, callback) {
 function ctrlsTasksAddTask(task, callback) {
     var newTask = task;
     newTask["timeelapsed"] = null;
-
+    newTask["_id"] = Date.now().toString();
     dbTasks.put(newTask).then(responseTask => {
         dbProjects.get(project).then(responseProject => {
             newTask["name"] = responseProject["name"];
